@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import PropTypes from 'prop-types';
+import { format } from 'timeago.js';
 
 export const Post = ({ gist }) => {
 
-    const { owner, id, created_at: publishDate, comments, description } = gist;
+    const { owner, id, updated_at: updatedDate, comments, description } = gist;
     const { login, avatar_url: avatar, } = owner;
     return (
         <article className="post vt-post">
@@ -17,8 +18,8 @@ export const Post = ({ gist }) => {
                         <ul className="list-inline">
                             <li>
                                 <div className="info">
-                                    <p>Posted on:</p>
-                                    <strong>{publishDate}</strong>
+                                    <p>Last update on:</p>
+                                    <strong>{format(updatedDate, 'en_US')}</strong>
                                 </div>
                             </li>
                             <li>
@@ -47,7 +48,7 @@ Post.propTypes = {
     gist: PropTypes.exact({
         owner: PropTypes.object.isRequired,
         id: PropTypes.string.isRequired,
-        created_at: PropTypes.string.isRequired,
+        updated_at: PropTypes.string.isRequired,
         comments: PropTypes.number.isRequired,
     }),
 };
