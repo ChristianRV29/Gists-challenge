@@ -1,8 +1,11 @@
 import { AppRouter } from "./routes/AppRouter";
+import DataHolder from './data/DataHolder';
 import './styles/app.css';
 const App = () => {
     return (
-        <AppRouter />
+        <DataHolder>
+            <AppRouter />
+        </DataHolder>
     );
 };
 
