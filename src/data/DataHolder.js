@@ -16,10 +16,6 @@ const reducer = (state, action) => {
         case 'DELETE_GIST':
             return { ...state, publicGists: [] };
 
-        case 'SEARCH_GISTS':
-            const nameUser = action.name;
-            return { ...state };
-
         case 'ADD_MY_GISTS':
             return { ...state, ownGists: action.payload };
 

@@ -5,26 +5,26 @@ import { format } from 'timeago.js';
 export const Post = ({ gist }) => {
 
     const { owner, id, updated_at: updatedDate, comments, description } = gist;
-    const { login, avatar_url: avatar, } = owner;
+    const { login, avatar_url: avatar, repos_url: url } = owner;
     return (
         <article className="post vt-post">
             <div className="row">
                 <div className="col-xs-12 col-sm-5 col-md-5 col-lg-4">
                     <div className="post-type post-img">
-                        <a href="#">
+                        <a href={url} target={'_blank'}>
                             <img src={avatar} className="img-responsive" alt="image post" /></a>
                     </div>
                     <div className="author-info author-info-2">
                         <ul className="list-inline">
                             <li>
                                 <div className="info">
-                                    <p>Last update on:</p>
+                                    <p>Last modified</p>
                                     <strong>{format(updatedDate, 'en_US')}</strong>
                                 </div>
                             </li>
                             <li>
                                 <div className="info">
-                                    <p>Comments:</p>
+                                    <p>Comments</p>
                                     <strong>{comments}</strong>
                                 </div>
                             </li>
@@ -34,10 +34,11 @@ export const Post = ({ gist }) => {
                 <div className="col-xs-12 col-sm-7 col-md-7 col-lg-8">
                     <div className="caption">
                         <h3 className="md-heading">
-                            <a href="#">{`${login} / gist:${id}`}</a>
+                            {`${login} / gist:${id}`}
                         </h3>
                         <p>{description}</p>
-                        <a className="btn btn-default" href="#" role="button">Read More</a> </div>
+                        <button className="btn btn-primary" role="button">Read More</button>
+                    </div>
                 </div>
             </div>
         </article>
@@ -45,7 +46,7 @@ export const Post = ({ gist }) => {
 }
 
 Post.propTypes = {
-    gist: PropTypes.exact({
+    gist: PropTypes.shape({
         owner: PropTypes.object.isRequired,
         id: PropTypes.string.isRequired,
         updated_at: PropTypes.string.isRequired,

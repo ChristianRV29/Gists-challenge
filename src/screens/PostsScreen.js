@@ -1,15 +1,20 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, Fragment } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import queryString from 'query-string';
 
-import GithubApi from "./../api/github";
+import GithubApi from './../api/github';
 import { Post } from './../components/organisms/Post';
 import DataContext from './../context/data-context';
-
+import { useSearch } from './../hooks/useSearch';
 
 export const PostsScreen = () => {
 
-    const { state, dispatch } = useContext(DataContext);
+    const navigate = useNavigate();
 
-    const { publicGists } = state; 
+    const { state, dispatch } = useContext(DataContext);
+    const { publicGists } = state;
+
+    const [valueSearch, handleInputSearch] = useSearch();
 
     useEffect(() => {
         getGists();
@@ -23,26 +28,49 @@ export const PostsScreen = () => {
         }).catch((err) => console.log(err));
     };
 
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        getGistByUser();
+        // navigate(`/${valueSearch}`);
+    }
+
+    const getGistByUser = async () => {
+        await GithubApi.getGistsByUser(valueSearch)
+        .then((resp) => {
+            dispatch({ type: 'ADD_GISTS', payload: resp });
+        }).catch((err) => console.log(err));
+    };
     return (
-        <div className="container">
-            <div className="col-md-12 col-lg-12">
-                {(publicGists || []).map((it) => (
-                    <Post gist={it} />
-                ))}
-                <div className="pagination-wrap">
-                    <nav aria-label="Page navigation example">
-                        <ul className="pagination">
-                            <li className="page-item"><a className="page-link" href="#">Previous</a></li>
-                            <li className="page-item"><a className="page-link" href="#">1</a></li>
-                            <li className="page-item"><a className="page-link" href="#">2</a></li>
-                            <li className="page-item"><a className="page-link" href="#">3</a></li>
-                            <li className="page-item"><a className="page-link" href="#">Next</a></li>
-                        </ul>
-                    </nav>
+        <Fragment>
+            <div className="container">
+                <form onSubmit={handleSearch}>
+                    <div className="input-group">
+                        <input type="search" className="form-control rounded"
+                            placeholder="Search a gist by user name..." aria-label="Search"
+                            aria-describedby="search-addon" onChange={handleInputSearch} value={valueSearch} />
+                        <button type="submit" className="btn btn-outline-primary">Search</button>
+                    </div>
+                </form>
+                <div className="col-md-12 col-lg-12">
+                    {(publicGists || []).map((it, i) => (
+                        <Post gist={it} key={`post-${i + 1}-gist`} />
+                    ))}
+                    {/* <div className="pagination-wrap">
+                        <nav aria-label="Page navigation example">
+                            <ul className="pagination">
+                                <li className="page-item"><a className="page-link" href="#">Previous</a></li>
+                                <li className="page-item"><a className="page-link" href="#">1</a></li>
+                                <li className="page-item"><a className="page-link" href="#">2</a></li>
+                                <li className="page-item"><a className="page-link" href="#">3</a></li>
+                                <li className="page-item"><a className="page-link" href="#">Next</a></li>
+                            </ul>
+                        </nav>
+                    </div> */}
+                    <div className="clearfix"></div>
                 </div>
-                <div className="clearfix"></div>
             </div>
-        </div>
+        </Fragment>
     )
 };
 
