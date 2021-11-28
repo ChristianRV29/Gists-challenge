@@ -1,7 +1,11 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import PropTypes from 'prop-types';
+import { format } from 'timeago.js';
 
-export const Post = ({ avatar, publicationDate, updateDate, owner, postInfo }) => {
-    const { title, description } = postInfo;
+export const Post = ({ gist }) => {
+
+    const { owner, id, updated_at: updatedDate, comments, description } = gist;
+    const { login, avatar_url: avatar, } = owner;
     return (
         <article className="post vt-post">
             <div className="row">
@@ -14,14 +18,14 @@ export const Post = ({ avatar, publicationDate, updateDate, owner, postInfo }) =
                         <ul className="list-inline">
                             <li>
                                 <div className="info">
-                                    <p>Posted on:</p>
-                                    <strong>{publicationDate}</strong>
+                                    <p>Last update on:</p>
+                                    <strong>{format(updatedDate, 'en_US')}</strong>
                                 </div>
                             </li>
                             <li>
                                 <div className="info">
-                                    <p>Last update on:</p>
-                                    <strong>{updateDate}</strong>
+                                    <p>Comments:</p>
+                                    <strong>{comments}</strong>
                                 </div>
                             </li>
                         </ul>
@@ -30,9 +34,9 @@ export const Post = ({ avatar, publicationDate, updateDate, owner, postInfo }) =
                 <div className="col-xs-12 col-sm-7 col-md-7 col-lg-8">
                     <div className="caption">
                         <h3 className="md-heading">
-                            <a href="#">{owner} / {title}</a>
+                            <a href="#">{`${login} / gist:${id}`}</a>
                         </h3>
-                        <p> {description}</p>
+                        <p>{description}</p>
                         <a className="btn btn-default" href="#" role="button">Read More</a> </div>
                 </div>
             </div>
@@ -41,13 +45,10 @@ export const Post = ({ avatar, publicationDate, updateDate, owner, postInfo }) =
 }
 
 Post.propTypes = {
-    avatar: PropTypes.string.isRequired,
-    publicationDate: PropTypes.string.isRequired,
-    updateDate: PropTypes.string.isRequired,
-    owner: PropTypes.string.isRequired,
-    postInfo: PropTypes.exact({
-        title: PropTypes.string.isRequired,
-        description: PropTypes.string,
-        files: PropTypes.object,
+    gist: PropTypes.exact({
+        owner: PropTypes.object.isRequired,
+        id: PropTypes.string.isRequired,
+        updated_at: PropTypes.string.isRequired,
+        comments: PropTypes.number.isRequired,
     }),
 };
