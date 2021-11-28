@@ -54,7 +54,7 @@ export const Navbar = () => {
                                 onClick={handleLogout}>
                                 Logout
                             </button> :
-                            <NavLink className={'btn btn-outline-secondary my-2 my-sm-0'} to={'/login'}>
+                            <NavLink className={'btn btn-outline-dark my-2 my-sm-0'} to={'/login'}>
                                 <i className="fab fa-github"></i>
                                 <span>Login</span>
                             </NavLink>}
