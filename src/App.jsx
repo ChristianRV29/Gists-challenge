@@ -1,9 +1,8 @@
-
+import { AppRouter } from "./routes/AppRouter";
+import './styles/app.css';
 const App = () => {
     return (
-        <div>
-            <h1>Gists challenge</h1>
-        </div>
+        <AppRouter />
     );
 };
 
