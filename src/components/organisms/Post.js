@@ -1,11 +1,30 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
+
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'timeago.js';
 
 export const Post = ({ gist }) => {
 
-    const { owner, id, updated_at: updatedDate, comments, description } = gist;
+    const { owner, id, updated_at: updatedDate, comments, description, files } = gist;
     const { login, avatar_url: avatar, repos_url: url } = owner;
+
+    const [fileName, setFileName] = useState('');
+
+    useEffect(() => {
+        let gistKey = '';
+        Object.keys(files).forEach((key) => {
+            if (key && key.length > 0) {
+                gistKey = key;
+            }
+        });
+        if (gistKey.length > 0) {
+            setFileName(gistKey);
+        } else {
+            setFileName(`gist:${id}`);
+        }
+    }, []);
+
     return (
         <article className="post vt-post">
             <div className="row">
@@ -34,10 +53,10 @@ export const Post = ({ gist }) => {
                 <div className="col-xs-12 col-sm-7 col-md-7 col-lg-8">
                     <div className="caption">
                         <h3 className="md-heading">
-                            {`${login} / gist:${id}`}
+                            {`${login} / ${fileName}`}
                         </h3>
                         <p>{description}</p>
-                        <button className="btn btn-primary" role="button">Read More</button>
+                        <button className="btn btn-primary">Read More</button>
                     </div>
                 </div>
             </div>

@@ -32,13 +32,13 @@ export const PostsScreen = () => {
     const handleSearch = (e) => {
         e.preventDefault();
         getGistByUser();
-        // navigate(`/${valueSearch}`);
     }
 
     const getGistByUser = async () => {
         await GithubApi.getGistsByUser(valueSearch)
         .then((resp) => {
             dispatch({ type: 'ADD_GISTS', payload: resp });
+            navigate(`/${valueSearch}`);
         }).catch((err) => console.log(err));
     };
     return (
