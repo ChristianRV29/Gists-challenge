@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { Navigate, NavLink } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import GithubApi from '../api/github';
 
 import AuthContext from './../context/auth-context';
@@ -30,6 +30,7 @@ export const LoginScreen = () => {
             };
 
             GithubApi.login(requestData).then((data) => {
+                console.log(data);
                 dispatchAuth({ type: 'LOGIN', payload: { user: data, isLoggedIn: true } })
             }).catch((err) => {
                 console.log('ERROR: ', err);
