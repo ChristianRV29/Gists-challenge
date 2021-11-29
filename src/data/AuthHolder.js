@@ -9,15 +9,17 @@ const initialState = {
     clientId: process.env.REACT_APP_CLIENT_ID,
     clientSecret: process.env.REACT_APP_CLIENT_SECRET,
     redirectUri: process.env.REACT_APP_REDIRECT_URI,
+    code: null,
 };
 
 const reducer = (state, action) => {
     switch (action.type) {
-        case 'lOGIN':
+        case 'LOGIN':
             return {
                 ...state,
-                isLoggedIn: action.payload.isLogged,
-                user: action.payload.user
+                isLoggedIn: action.payload.isLoggedIn,
+                user: action.payload.user,
+                code: action.payload.code,
             };
         case 'LOGOUT':
             return { ...state, isLoggedIn: false, user: null };

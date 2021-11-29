@@ -1,27 +1,29 @@
 import { useEffect, useContext, Fragment } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Search } from './../components/molecules/Search';
+
 import GithubApi from './../api/github';
 import { Post } from './../components/organisms/Post';
 import DataContext from './../context/data-context';
-import { useSearch } from './../hooks/useSearch';
+import AuthContext from './../context/auth-context';
 
 export const OwnGists = () => {
 
+    const navigate = useNavigate();
+
+    const { authState } = useContext(AuthContext);
+    const { isLoggedIn } = authState;
     const { state, dispatch } = useContext(DataContext);
     const { publicGists } = state;
 
-    const [valueSearch, handleInputSearch] = useSearch();
-
     useEffect(() => {
-        getGistByUser();
-    }, []);
-
-
-    const handleSearch = (e) => {
-        e.preventDefault();
-        if (valueSearch && valueSearch.length > 0) {
+        if (isLoggedIn === false) {
+            navigate('/');
+        } else {
             getGistByUser();
         }
-    }
+    }, [authState]);
+
 
     const getGistByUser = async () => {
         await GithubApi.getGistsByUser('ChristianRV29')
@@ -32,14 +34,7 @@ export const OwnGists = () => {
     return (
         <Fragment>
             <div className="container">
-                <form onSubmit={handleSearch}>
-                    <div className="input-group">
-                        <input type="search" className="form-control rounded"
-                            placeholder="Search a gist by user name..." aria-label="Search"
-                            aria-describedby="search-addon" onChange={handleInputSearch} value={valueSearch} />
-                        <button type="submit" className="btn btn-outline-primary">Search</button>
-                    </div>
-                </form>
+                <Search />
                 <div className="col-md-12 col-lg-12">
                     {(publicGists || []).map((it, i) => (
                         <Post gist={it} key={`post-${i + 1}-gist`} />
