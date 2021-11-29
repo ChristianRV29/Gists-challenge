@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 
 export const Navbar = () => {
 
-    const [isLogged, setIsLogged] = useState(true);
+    const [isLogged, setIsLogged] = useState(false);
 
     const handleLogout = () => {
         setIsLogged(false);

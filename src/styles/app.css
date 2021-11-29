@@ -649,3 +649,18 @@ blockquote {
 .pagination {
     margin: 0px;
 }
+
+.principal-login-container {
+    padding-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    width: 250px;
+    background-color: #cfcccc;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
