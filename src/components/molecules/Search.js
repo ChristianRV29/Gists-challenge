@@ -4,13 +4,15 @@ import { useNavigate } from 'react-router-dom';
 
 import GithubApi from '../../api/github';
 import AuthContext from '../../context/auth-context';
+import DataContext from '../../context/data-context';
 import { useSearch } from '../../hooks/useSearch';
 
 
 export const Search = () => {
     
     const { authState } = useContext(AuthContext);
-    const { dispatch } = useContext(AuthContext);
+    const { dispatch } = useContext(DataContext);
+    const [valueSearch, handleInputSearch] = useSearch();
 
 
     const { isLoggedIn } = authState;
@@ -29,8 +31,10 @@ export const Search = () => {
     const handleSearch = (e) => {
         e.preventDefault();
         if (valueSearch && valueSearch.length > 0) {
+            console.log('busca por usuario');
             getGistByUser();
         } else {
+            console.log('busca por todos');
             getGists();
         }
     }
@@ -43,7 +47,6 @@ export const Search = () => {
         }).catch((err) => console.log(err));
     };
 
-    const [valueSearch, handleInputSearch] = useSearch();
     return (
         <form onSubmit={handleSearch}>
             <div className="input-group">
