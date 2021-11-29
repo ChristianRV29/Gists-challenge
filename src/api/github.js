@@ -13,9 +13,13 @@ export default class GithubApi {
     }
 
     static login(data) {
-        return axios.post('http://localhost:8080', data, {
-        })
-        .then(getResponseData)
-        .catch((err) => console.log(err));
+        return axios.post('http://localhost:8080/api/github/authenticate', data).then(getResponseData).catch(escalateError);
+        // return axios.post('http://github.com/login/oauth/access_token', data, {
+        //     headers: {
+        //         'Access-Control-Allow-Origin:': '*'
+        //     },
+        // })
+        // .then(getResponseData)
+        // .catch((err) => console.log('Puto error: ', err));
     }
 }

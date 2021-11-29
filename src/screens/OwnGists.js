@@ -1,6 +1,4 @@
 import { useEffect, useContext, Fragment } from 'react';
-import { useNavigate } from 'react-router-dom';
-
 import GithubApi from './../api/github';
 import { Post } from './../components/organisms/Post';
 import DataContext from './../context/data-context';

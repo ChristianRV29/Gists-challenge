@@ -17,6 +17,7 @@ export const LoginScreen = () => {
         const hasCode = url.includes(staticUrl);
 
         if (hasCode) {
+            console.log('Encontro el codigo');
             const newUrl = url.split(staticUrl);
 
             window.history.pushState({}, null, newUrl[0]);
@@ -30,17 +31,15 @@ export const LoginScreen = () => {
             };
 
             GithubApi.login(requestData).then((data) => {
-                console.log(data);
                 dispatchAuth({ type: 'LOGIN', payload: { user: data, isLoggedIn: true } })
             }).catch((err) => {
-                console.log('ERROR: ', err);
                 setData({
                     isLoading: false,
                     errorMessage: 'Sorry! Login failed'
                 })
             })
         }
-    }, []);
+    }, [authState, dispatchAuth, data]);
 
 
     if (isLoggedIn) {
@@ -57,7 +56,7 @@ export const LoginScreen = () => {
                             <div className={'loader'} ></div>
                         </div>
                     ) :
-                        <a className={'login-link'} href={`https://github.com/login/oauth/authorize?scope=user&client_id=${clientId}&redirec_uri=${redirectUri}`}>
+                        <a className={'login-link'} href={`https://github.com/login/oauth/authorize?scope=user&client_id=${clientId}&redirect_uri=${redirectUri}`}>
                             <button className={'btn btn-lg btn-primary btn-block'} onClick={() => {
                                 setData({...data, errorMessage: '' });
                             }}>

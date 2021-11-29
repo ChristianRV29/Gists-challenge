@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import AuthContext from './../context/auth-context';
 
 const initialState = {
-    isLoggedIn: true,
+    isLoggedIn: false,
     user: null,
     clientId: process.env.REACT_APP_CLIENT_ID,
     clientSecret: process.env.REACT_APP_CLIENT_SECRET,
