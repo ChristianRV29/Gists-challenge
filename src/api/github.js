@@ -13,13 +13,21 @@ export default class GithubApi {
     }
 
     static login(data) {
+<<<<<<< HEAD
         // return axios.post('http://localhost:8080/api/github/authenticate', data).then(getResponseData).catch(escalateError);
+=======
+        console.log(data);
+>>>>>>> 81f62490cf58a1f5b282359d22b7fa4cc8d2469f
         return axios.post('http://github.com/login/oauth/access_token', data, {
             headers: {
                 'Content-Type:': 'application/json'
             },
         })
         .then(getResponseData)
+<<<<<<< HEAD
         .catch((err) => console.log('Puto error: ', err));
+=======
+        .catch(escalateError);
+>>>>>>> 81f62490cf58a1f5b282359d22b7fa4cc8d2469f
     }
 }
