@@ -10,6 +10,7 @@ export const AppRouter = () => {
             <Navbar />
             <Routes>
                 <Route path="/" element={<PostsScreen />} />
+                <Route path="/:owner" element={<PostsScreen />} />
                 <Route path="/login" element={<LoginScreen />} />
                 <Route path="*" element={<NotFoundScreen />} />
             </Routes>
