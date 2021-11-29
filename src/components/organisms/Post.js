@@ -1,14 +1,19 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { format } from 'timeago.js';
+
+import DataContext from './../../context/data-context';
 
 export const Post = ({ gist }) => {
 
     const { owner, id, updated_at: updatedDate, comments, description, files } = gist;
     const { login, avatar_url: avatar, repos_url: url } = owner;
 
+    const { dispatch } = useContext(DataContext);
+    
     const [fileName, setFileName] = useState('');
 
     useEffect(() => {
@@ -24,6 +29,10 @@ export const Post = ({ gist }) => {
             setFileName(`gist:${id}`);
         }
     }, []);
+
+    const seeDetails = () => {
+        dispatch({ type: 'ASSING_GIST_DETAIL', payload: gist });
+    };
 
     return (
         <article className="post vt-post">
@@ -55,8 +64,10 @@ export const Post = ({ gist }) => {
                         <h3 className="md-heading">
                             {`${login} / ${fileName}`}
                         </h3>
-                        <p>{description}</p>
-                        <button className="btn btn-primary">See more details</button>
+                        <p>{description.length > 0 ? description : 'Without description'}</p>
+                        <NavLink to={`/gist/id?=${id}`}>
+                            <button className="btn btn-primary" onClick={seeDetails}>See more details</button>
+                        </NavLink>
                     </div>
                 </div>
             </div>
