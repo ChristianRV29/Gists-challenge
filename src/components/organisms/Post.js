@@ -13,10 +13,11 @@ export const Post = ({ gist }) => {
     const { login, avatar_url: avatar, repos_url: url } = owner;
 
     const { dispatch } = useContext(DataContext);
-    
-    const [fileName, setFileName] = useState('');
 
-    useEffect(() => {
+    const [fileName, setFileName] = useState('');
+    const [contentFile, setContentFile] = useState('');
+
+    useEffect(() => {
         let gistKey = '';
         Object.keys(files).forEach((key) => {
             if (key && key.length > 0) {
@@ -64,7 +65,7 @@ export const Post = ({ gist }) => {
                         <h3 className="md-heading">
                             {`${login} / ${fileName}`}
                         </h3>
-                        <p>{description.length > 0 ? description : 'Without description'}</p>
+                        <p>{description}</p>
                         <NavLink to={`/gist/id?=${id}`}>
                             <button className="btn btn-primary" onClick={seeDetails}>See more details</button>
                         </NavLink>

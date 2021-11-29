@@ -1,15 +1,17 @@
 import { useContext, useState, useEffect } from 'react';
+import axios from 'axios';
 
 import DataContext from './../context/data-context';
 
 export const DetailPostScreen = () => {
 
     const [fileName, setFileName] = useState('');
+    const [contentFile, setContentFile] = useState('');
 
     const { state } = useContext(DataContext);
     const { actualGist } = state;
 
-    const { owner = {}, id, updated_at: updatedDate, comments, description, files } = actualGist;
+    const { owner = {}, id, updated_at: updatedDate, comments, description = '', files } = actualGist;
     const { login = '', avatar_url: avatar = '', repos_url: url = '' } = owner;
 
 
@@ -26,8 +28,23 @@ export const DetailPostScreen = () => {
             } else {
                 setFileName(`gist:${id}`);
             }
+
+            getContentFile(gistKey);
         }
     }, []);
+
+    const getContentFile = async (gistKey) => {
+        const { raw_url = '' } = files[gistKey];
+
+        await axios.get(raw_url, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }).then((res) => {
+            setContentFile(res.data);
+        }).catch((err) => console.log(err));
+
+    };
 
 
     return (
@@ -61,11 +78,9 @@ export const DetailPostScreen = () => {
                             <h3 className="md-heading">
                                 {`${login} / ${fileName}`}
                             </h3>
-                            <span>{description.length > 0 ? description : 'Without description'}</span>
-                            <div class="form-group">
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" readOnly>
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                                </textarea>
+                            <span><strong>{description}</strong></span>
+                            <div className="form-group">
+                                <textarea style={{ height: '450px'}} className="form-control" id="exampleFormControlTextarea1" rows="3" readOnly value={contentFile}  defaultValue={''}/>
                             </div>
                         </div>
                     </div>
