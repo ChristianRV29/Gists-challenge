@@ -15,7 +15,6 @@ export const Post = ({ gist }) => {
     const { dispatch } = useContext(DataContext);
 
     const [fileName, setFileName] = useState('');
-    const [contentFile, setContentFile] = useState('');
 
     useEffect(() => {
         let gistKey = '';

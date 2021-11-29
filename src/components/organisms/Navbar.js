@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+
+import AuthContext from './../../context/auth-context';
 
 export const Navbar = () => {
 
-    const [isLogged, setIsLogged] = useState(true);
+    const { authState, dispatchAuth } = useContext(AuthContext);
+    const { isLoggedIn } = authState
 
     const handleLogout = () => {
-        setIsLogged(false);
-    };
+        dispatchAuth({ type: 'LOGOUT' });
+    }
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -39,9 +42,9 @@ export const Navbar = () => {
                                 Public gists
                             </NavLink>
                         </li>
-                        {isLogged && (
+                        {isLoggedIn && (
                             <li>
-                                <NavLink className={'nav-link'} to={'/login'}>
+                                <NavLink className={'nav-link'} to={'/gists/mygists'}>
                                     Your gists
                                 </NavLink>
                             </li>
@@ -49,7 +52,7 @@ export const Navbar = () => {
                     </ul>
 
                     <div className="d-flex align-items-center">
-                        {isLogged ?
+                        {isLoggedIn ? 
                             <button className='btn btn-outline-danger my-2 my-sm-0' type="submit"
                                 onClick={handleLogout}>
                                 Logout

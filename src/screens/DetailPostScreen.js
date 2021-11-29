@@ -82,10 +82,16 @@ export const DetailPostScreen = () => {
                             <h3 className="md-heading">
                                 {`${login} / ${fileName}`}
                             </h3>
-                            <span><strong>{description}</strong></span>
-                            <h1>Type of file: {typeFile}</h1>
+                            <span>
+                                <strong>Description:</strong>
+                                {description}
+                            </span>
+                            <br />
+                            <span><strong>Type of file:</strong>
+                                {typeFile}
+                            </span>
                             <div className="form-group">
-                                <textarea style={{ height: '450px'}} className="form-control" id="exampleFormControlTextarea1" rows="3" readOnly value={contentFile}  defaultValue={''}/>
+                                <textarea style={{ height: '450px' }} className="form-control" id="exampleFormControlTextarea1" rows="3" readOnly value={contentFile} defaultValue={''} />
                             </div>
                         </div>
                     </div>
