@@ -1,6 +1,5 @@
 import { useEffect, useContext, Fragment } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import queryString from 'query-string';
+import { useNavigate } from 'react-router-dom';
 
 import GithubApi from './../api/github';
 import { Post } from './../components/organisms/Post';
@@ -31,7 +30,11 @@ export const PostsScreen = () => {
 
     const handleSearch = (e) => {
         e.preventDefault();
-        getGistByUser();
+        if (valueSearch) {
+            getGistByUser();
+        } else {
+            getGists();
+        }
     }
 
     const getGistByUser = async () => {

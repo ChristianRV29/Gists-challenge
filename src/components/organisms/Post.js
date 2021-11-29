@@ -56,7 +56,7 @@ export const Post = ({ gist }) => {
                             {`${login} / ${fileName}`}
                         </h3>
                         <p>{description}</p>
-                        <button className="btn btn-primary">Read More</button>
+                        <button className="btn btn-primary">See more details</button>
                     </div>
                 </div>
             </div>
