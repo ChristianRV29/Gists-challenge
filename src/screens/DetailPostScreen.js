@@ -1,4 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
+import { format } from 'timeago.js';
 import axios from 'axios';
 
 import DataContext from './../context/data-context';
@@ -7,6 +8,7 @@ export const DetailPostScreen = () => {
 
     const [fileName, setFileName] = useState('');
     const [contentFile, setContentFile] = useState('');
+    const [typeFile, setTypeFile] = useState('');
 
     const { state } = useContext(DataContext);
     const { actualGist } = state;
@@ -34,7 +36,9 @@ export const DetailPostScreen = () => {
     }, []);
 
     const getContentFile = async (gistKey) => {
-        const { raw_url = '' } = files[gistKey];
+        const { raw_url = '', type } = files[gistKey];
+
+        setTypeFile(type);
 
         await axios.get(raw_url, {
             headers: {
@@ -61,7 +65,7 @@ export const DetailPostScreen = () => {
                                 <li>
                                     <div className="info">
                                         <p>Last modified</p>
-                                        <strong>{updatedDate}</strong>
+                                        <strong>{format(updatedDate, 'en_US')}</strong>
                                     </div>
                                 </li>
                                 <li>
@@ -79,6 +83,7 @@ export const DetailPostScreen = () => {
                                 {`${login} / ${fileName}`}
                             </h3>
                             <span><strong>{description}</strong></span>
+                            <h1>Type of file: {typeFile}</h1>
                             <div className="form-group">
                                 <textarea style={{ height: '450px'}} className="form-control" id="exampleFormControlTextarea1" rows="3" readOnly value={contentFile}  defaultValue={''}/>
                             </div>
