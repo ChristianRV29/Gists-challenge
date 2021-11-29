@@ -1,5 +1,6 @@
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { Navbar } from '../components/organisms/Navbar';
+import { DetailPostScreen } from '../screens/DetailPostScreen';
 import { LoginScreen } from '../screens/LoginScreen';
 import { NotFoundScreen } from '../screens/NotFoundScreen';
 import { PostsScreen } from '../screens/PostsScreen';
@@ -11,6 +12,7 @@ export const AppRouter = () => {
             <Routes>
                 <Route path="/" element={<PostsScreen />} />
                 <Route path="/:owner" element={<PostsScreen />} />
+                <Route path="/gist/:id"  element={<DetailPostScreen />}/>
                 <Route path="/login" element={<LoginScreen />} />
                 <Route path="*" element={<NotFoundScreen />} />
             </Routes>

@@ -6,6 +6,7 @@ import DataContext from './../context/data-context';
 const initialState = {
     publicGists: [],
     ownGists: [],
+    actualGist: { },
 };
 
 const reducer = (state, action) => {
@@ -18,6 +19,9 @@ const reducer = (state, action) => {
 
         case 'ADD_MY_GISTS':
             return { ...state, ownGists: action.payload };
+
+        case 'ASSING_GIST_DETAIL':
+            return { ...state, actualGist: action.payload };
 
         case 'DELETE_MY_GISTS':
             return { ...state, ownGists: [] };
