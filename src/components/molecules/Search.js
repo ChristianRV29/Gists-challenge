@@ -9,7 +9,7 @@ import { useSearch } from '../../hooks/useSearch';
 
 
 export const Search = () => {
-    
+
     const { authState } = useContext(AuthContext);
     const { dispatch } = useContext(DataContext);
     const [valueSearch, handleInputSearch] = useSearch();
@@ -47,6 +47,10 @@ export const Search = () => {
         }).catch((err) => console.log(err));
     };
 
+    const handleNewGist = () => {
+        navigate('/newgist');
+    }
+
     return (
         <form onSubmit={handleSearch}>
             <div className="input-group">
@@ -54,7 +58,7 @@ export const Search = () => {
                     placeholder="Search a gist by user name..." aria-label="Search"
                     aria-describedby="search-addon" onChange={handleInputSearch} value={valueSearch} />
                 <button type="submit" className="btn btn-outline-primary">Search</button>
-                {isLoggedIn ?  <button className={'btn btn-outline-success'}>+ Create gist</button> : <></>}
+                {isLoggedIn ?  <button className={'btn btn-outline-success'} onClick={handleNewGist}>+ Create gist</button> : <></>}
             </div>
         </form>
     )

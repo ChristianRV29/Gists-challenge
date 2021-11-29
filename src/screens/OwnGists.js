@@ -1,12 +1,11 @@
 import { useEffect, useContext, Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search } from '../components/molecules/Search';
+import { Search } from './../components/molecules/Search';
 
 import GithubApi from './../api/github';
 import { Post } from './../components/organisms/Post';
 import DataContext from './../context/data-context';
 import AuthContext from './../context/auth-context';
-import { useSearch } from './../hooks/useSearch';
 
 export const OwnGists = () => {
 
@@ -17,8 +16,6 @@ export const OwnGists = () => {
     const { state, dispatch } = useContext(DataContext);
     const { publicGists } = state;
 
-    const [valueSearch, handleInputSearch] = useSearch();
-
     useEffect(() => {
         if (isLoggedIn === false) {
             navigate('/');
@@ -27,13 +24,6 @@ export const OwnGists = () => {
         }
     }, [authState]);
 
-
-    const handleSearch = (e) => {
-        e.preventDefault();
-        if (valueSearch && valueSearch.length > 0) {
-            getGistByUser();
-        }
-    }
 
     const getGistByUser = async () => {
         await GithubApi.getGistsByUser('ChristianRV29')
