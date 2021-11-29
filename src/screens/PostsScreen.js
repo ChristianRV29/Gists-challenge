@@ -30,7 +30,7 @@ export const PostsScreen = () => {
 
     const handleSearch = (e) => {
         e.preventDefault();
-        if (valueSearch) {
+        if (valueSearch && valueSearch.length > 0) {
             getGistByUser();
         } else {
             getGists();
